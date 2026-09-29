@@ -1,0 +1,32 @@
+name: Python protocol tests
+
+on:
+  push:
+    paths:
+      - "tools/uart_updater/**"
+      - ".github/workflows/python-tests.yml"
+  pull_request:
+    paths:
+      - "tools/uart_updater/**"
+      - ".github/workflows/python-tests.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: tools/uart_updater/requirements.txt
+      - name: Install test dependency
+        run: python -m pip install "pyserial>=3.5"
+      - name: Run protocol tests
+        working-directory: tools/uart_updater
+        run: python -B -m unittest discover -s . -p "test_*.py" -v
+

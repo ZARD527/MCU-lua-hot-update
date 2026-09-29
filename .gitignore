@@ -1,0 +1,52 @@
+# Keil build output
+**/Objects/
+**/Listings/
+**/DebugConfig/
+*.axf
+*.bin
+*.hex
+*.map
+*.lst
+*.lnp
+*.crf
+*.d
+*.o
+*.dep
+*.build_log.htm
+*.sct
+
+# Keil per-user state
+*.uvguix.*
+*.uvoptx
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.swp
+*.log
+.DS_Store
+Thumbs.db
+
+# Generated updater data and local captures
+*.lua_uart.bin
+*.lua_uart.json
+*.pcap
+*.pcapng
+
+# Secrets and signing material
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+

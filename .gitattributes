@@ -1,0 +1,16 @@
+* text=auto
+
+*.c text eol=lf
+*.h text eol=lf
+*.py text eol=lf
+*.lua text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.uvprojx text eol=crlf
+*.s text eol=crlf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+
