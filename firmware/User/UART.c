@@ -1,5 +1,5 @@
-#include "Config.h"
 #include "include.h"
+#include "Config.h"
 
 static uint32_t SoftUART_BitCycles;
 
@@ -32,6 +32,7 @@ void SoftUART_Init(void) {
   GPIO_SetBits(SOFT_UART_TX_GPIO, SOFT_UART_TX_PIN);
 }
 
+
 void SoftUART_SendByte(uint8_t data) {
   uint8_t i;
   uint32_t primask = __get_PRIMASK();
@@ -58,12 +59,14 @@ void SoftUART_SendByte(uint8_t data) {
   __set_PRIMASK(primask);
 }
 
+
 void SoftUART_SendString(const char *str) {
   while ((str != 0) && (*str != '\0')) {
     SoftUART_SendByte((uint8_t)*str);
     str++;
   }
 }
+
 
 uint8_t SoftUART_ReceiveByte(uint8_t *data, uint32_t timeoutMs) {
   uint8_t i;
@@ -114,11 +117,13 @@ uint8_t SoftUART_ReceiveByte(uint8_t *data, uint32_t timeoutMs) {
   return 1U;
 }
 
+
 static void SoftUART_DWTInit(void) {
   CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
   DWT->CYCCNT = 0U;
   DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 }
+
 
 static void SoftUART_DelayCycles(uint32_t cycles) {
   uint32_t start = DWT->CYCCNT;
@@ -126,6 +131,7 @@ static void SoftUART_DelayCycles(uint32_t cycles) {
   while ((DWT->CYCCNT - start) < cycles) {
   }
 }
+
 
 static uint32_t SoftUART_ElapsedCycles(uint32_t start) {
   return DWT->CYCCNT - start;

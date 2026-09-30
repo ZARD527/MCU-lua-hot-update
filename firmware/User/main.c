@@ -13,44 +13,14 @@ lua_State *g_lua_state = NULL;
 static char App_LuaName[] = "Flash_Lua";
 
 
- 
-
-
-
-
-
-
-
-
-
 static void App_Write(const char *msg) {
     UART_M_SendString(msg, 0);
 }
 
 
- 
-
-
-
-
-
-
-
-
-
-
-
 static GPIO_TypeDef *App_GetLedGpio(int id) {
     return (id == 2) ? LED2_GPIO : LED1_GPIO;
 }
-
-
- 
-
-
-
-
-
 
 
 static uint16_t App_GetLedPin(int id) {
@@ -64,18 +34,6 @@ static int App_CheckLedId(lua_State *L) {
     luaL_argcheck(L, id == 1 || id == 2, 1, "LED id must be 1 or 2");
     return id;
 }
-
-
- 
-
-
-
-
-
-
-
-
-
 
 
 static int Lua_LedOn(lua_State *L) {

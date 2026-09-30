@@ -1,6 +1,6 @@
+#include "lauxlib.h"
 #include "include.h"
 #include "Config.h"
-#include "lauxlib.h"
 #include "stdio.h"
 
 
@@ -27,21 +27,6 @@ uint8_t BSP_Init(void) {
 
     return 0;
 }
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 uint8_t BSP_LuaRegisterFunction(lua_State *L, const char *name, lua_CFunction func) {

@@ -1,7 +1,7 @@
 #include "include.h"
+#include "string.h"
 #include "Config.h"
 #include "stdio.h"
-#include "string.h"
 #include "lua.h"
 
 

@@ -1,8 +1,8 @@
 #include "lua_script_update.h"
 #include "include.h"
 #include "Config.h"
-#include "lua.h"
 #include "stdio.h"
+#include "lua.h"
 
 
 typedef struct {

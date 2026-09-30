@@ -99,13 +99,16 @@ uint32_t Timer_GetMs(void) {
     return (uint32_t)(Timer_GetTicks() * 1000ULL / TIMER_TICK_HZ);
 }
 
+
 static inline uint32_t BCD2BIN(uint32_t bcd) {
     return ((bcd >> 4) * 10 + (bcd & 0x0F));
 }
 
+
 uint64_t Timer_GetUs(void) {
     return Timer_GetTicks() * 1000000ULL / TIMER_TICK_HZ;
 }
+
 
 uint64_t Timer_GetUs_High(void) {
     uint32_t TR, SSR;

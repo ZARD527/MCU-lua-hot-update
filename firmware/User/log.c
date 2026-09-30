@@ -1,8 +1,8 @@
-#include "Config.h"
 #include "include.h"
+#include "stdarg.h"
+#include "Config.h"
+#include "stdio.h"
 
-#include <stdarg.h>
-#include <stdio.h>
 
 #pragma import(__use_no_semihosting)
 
@@ -15,6 +15,7 @@ FILE __stdout;
 static uint8_t g_logSoftReady;
 
 static void Log_PrintClockInfo(void);
+
 
 static void Log_PrintClockInfo(void) {
     RCC_ClocksTypeDef clocks;
@@ -30,6 +31,7 @@ static void Log_PrintClockInfo(void) {
     log_info("PCLK2: %lu Hz", clocks.PCLK2_Frequency);
 }
 
+
 void Log_Init(void) {
     SystemCoreClockUpdate();
     UART_H_Init();
@@ -41,6 +43,7 @@ void Log_Init(void) {
     Log_PrintClockInfo();
 }
 
+
 void log_info(const char *fmt, ...) {
     va_list args;
 
@@ -51,6 +54,7 @@ void log_info(const char *fmt, ...) {
     printf("\r\n");
 }
 
+
 void log_error(const char *fmt, ...) {
     va_list args;
 
@@ -60,6 +64,7 @@ void log_error(const char *fmt, ...) {
     va_end(args);
     printf("\r\n");
 }
+
 
 int fputc(int ch, FILE *f) {
     (void)f;
@@ -73,9 +78,11 @@ int fputc(int ch, FILE *f) {
     return ch;
 }
 
+
 void _ttywrch(int ch) {
     (void)fputc(ch, &__stdout);
 }
+
 
 void _sys_exit(int return_code) {
     (void)return_code;

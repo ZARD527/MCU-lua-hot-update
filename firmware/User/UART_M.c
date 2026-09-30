@@ -1,11 +1,12 @@
-#include "Config.h"
 #include "include.h"
+#include "Config.h"
 
 
 static volatile uint8_t Rx_Data;
 static volatile uint32_t BitTicks;
 static volatile uint8_t Rx_BitIndex;
 static volatile UART_RX_State Rx_State;
+
 
 uint8_t str[521];
 uint8_t SoftUART_RxState = 0;
@@ -18,14 +19,6 @@ static volatile uint16_t SoftUART_RxRingTail;
 static volatile uint16_t SoftUART_RxRingCount;
 
 
- 
-
-
-
-
-
-
-
 void SoftUART_RingBufferClear(void) {
     uint32_t primask = __get_PRIMASK();
     __disable_irq();
@@ -36,36 +29,14 @@ void SoftUART_RingBufferClear(void) {
 }
 
 
- 
-
-
-
-
-
 uint8_t SoftUART_RingBufferIsEmpty(void) {
     return (SoftUART_RingBufferSize() == 0U) ? 1U : 0U;
 }
 
 
- 
-
-
-
-
-
-
-
-
-
 uint8_t SoftUART_RingBufferIsFull(void) {
     return (SoftUART_RingBufferSize() >= 512U) ? 1U : 0U;
 }
-
-
- 
-
-
-
 
 
 uint16_t SoftUART_RingBufferSize(void) {
@@ -79,14 +50,6 @@ uint16_t SoftUART_RingBufferSize(void) {
 }
 
 
- 
-
-
-
-
-
-
-
 void SoftUART_RingBufferInit(void) {
     SoftUART_RxRingHead = 0;
     SoftUART_RxRingTail = 0;
@@ -96,18 +59,6 @@ void SoftUART_RingBufferInit(void) {
         str[i] = 0;
     }
 }
-
-
- 
-
-
-
-
-
-
-
-
-
 
 
 uint8_t SoftUART_RingBufferPut(uint8_t data) {
@@ -124,17 +75,6 @@ uint8_t SoftUART_RingBufferPut(uint8_t data) {
     __set_PRIMASK(primask);
     return 1U;
 }
-
-
- 
-
-
-
-
-
-
-
-
 
 
 uint8_t SoftUART_RingBufferGet(uint8_t *data) {
@@ -159,19 +99,6 @@ uint8_t SoftUART_RingBufferGet(uint8_t *data) {
     
     
 }
-
-
- 
-
-
-
-
-
-
-
-
-
-
 
 
 uint8_t SoftUART_RingBufferPeek(uint16_t len, uint8_t *data) {
@@ -204,29 +131,11 @@ uint8_t SoftUART_RingBufferPeek(uint16_t len, uint8_t *data) {
 }
 
 
- 
-
-
-
-
-
-
-
 static void UART_M_DWTInit(void) {
     CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
     DWT->CYCCNT = 0U;
     DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 }
-
-
- 
-
-
-
-
-
-
-
 
 
 static void SoftUART_DelayCycles(uint32_t tick) {
@@ -237,16 +146,6 @@ static void SoftUART_DelayCycles(uint32_t tick) {
 }
 
 
- 
-
-
-
-
-
-
-
-
-
 static void SoftUART_Start(uint32_t tick) {
     TIM_SetCounter(SOFT_UART_TIM, 0);
     TIM_SetAutoreload(SOFT_UART_TIM, (tick - 1));
@@ -255,29 +154,11 @@ static void SoftUART_Start(uint32_t tick) {
 }
 
 
- 
-
-
-
-
-
-
-
 static void SoftUART_Stop(void) {
     TIM_Cmd(SOFT_UART_TIM, DISABLE);
     TIM_SetCounter(SOFT_UART_TIM, 0);
     TIM_ClearITPendingBit(SOFT_UART_TIM, TIM_IT_Update);
 }
-
-
- 
-
-
-
-
-
-
-
 
 
 static uint32_t UART_M_GetTIM6Clock(void)
@@ -292,14 +173,6 @@ static uint32_t UART_M_GetTIM6Clock(void)
 
     return pclk1;
 }
-
-
- 
-
-
-
-
-
 
 
 static void SoftUART_TIMInit(void) {
@@ -327,14 +200,6 @@ static void SoftUART_TIMInit(void) {
 }
 
 
- 
-
-
-
-
-
-
-
 void UART_M_EXTIInit(void) {
     EXTI_InitTypeDef EXTI_InitStructure;
     NVIC_InitTypeDef NVIC_InitStructure;
@@ -355,14 +220,6 @@ void UART_M_EXTIInit(void) {
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 }
-
-
- 
-
-
-
-
-
 
 
 void UART_M_GPIO_Init (void) {
@@ -390,15 +247,6 @@ void UART_M_GPIO_Init (void) {
 }
 
 
- 
-
-
-
-
-
-
-
-
 void UART_M_Init(void) {
 
     Rx_Data = 0U;
@@ -419,17 +267,6 @@ void UART_M_Init(void) {
     UART_M_EXTIInit();
 
 }
-
-
- 
-
-
-
-
-
-
-
-
 
 
 void UART_M_SendByte(uint8_t data) {
@@ -458,17 +295,6 @@ void UART_M_SendByte(uint8_t data) {
 }
 
 
- 
-
-
-
-
-
-
-
-
-
-
 void UART_M_SendString (const char *str, uint16_t len) {
     if (!len) {
         while (str && *str != '\0') {
@@ -482,18 +308,6 @@ void UART_M_SendString (const char *str, uint16_t len) {
         }
     }
 }
-
-
- 
-
-
-
-
-
-
-
-
-
 
 
 uint8_t UART_M_ReceiveByte(uint8_t *data) {
@@ -536,14 +350,6 @@ uint8_t UART_M_ReceiveByte(uint8_t *data) {
 }
 
 
- 
-
-
-
-
-
-
-
 void UART_M_ReceiveByte_TIM (void) {
 
     if ((GPIO_ReadInputDataBit(SOFT_UART_RX_GPIO, SOFT_UART_RX_PIN))) {
@@ -558,15 +364,6 @@ void UART_M_ReceiveByte_TIM (void) {
     }
 
 }
-
-
- 
-
-
-
-
-
-
 
 
 void EXTI9_5_IRQHandler(void) {
@@ -591,15 +388,6 @@ void EXTI9_5_IRQHandler(void) {
         
     }
 }
-
-
- 
-
-
-
-
-
-
 
 
 void SOFT_UART_TIM_IRQHandler(void) {

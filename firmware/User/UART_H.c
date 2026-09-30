@@ -1,5 +1,5 @@
-#include "Config.h"
 #include "include.h"
+#include "Config.h"
 
 
 #define UART_H_RX_BUFFER_SIZE  512U
@@ -11,14 +11,6 @@ static volatile uint16_t UART_H_RxRingTail;
 static volatile uint16_t UART_H_RxRingCount;
 
 
- 
-
-
-
-
-
-
-
 void UART_H_RingBufferClear(void) {
     UART_H_RxRingHead = 0U;
     UART_H_RxRingTail = 0U;
@@ -26,21 +18,9 @@ void UART_H_RingBufferClear(void) {
 }
 
 
- 
-
-
-
-
-
 uint8_t UART_H_RingBufferIsEmpty(void) {
     return (UART_H_RxRingCount == 0U) ? 1U : 0U;
 }
-
-
- 
-
-
-
 
 
 uint8_t UART_H_RingBufferIsFull(void) {
@@ -48,22 +28,9 @@ uint8_t UART_H_RingBufferIsFull(void) {
 }
 
 
- 
-
-
-
-
-
 uint16_t UART_H_RingBufferSize(void) {
     return UART_H_RxRingCount;
 }
-
-
- 
-
-
-
-
 
 
 void UART_H_RingBufferInit(void) {
@@ -73,14 +40,6 @@ void UART_H_RingBufferInit(void) {
         UART_H_RxRingBuffer[i] = 0U;
     }
 }
-
-
- 
-
-
-
-
-
 
 
 uint8_t UART_H_RingBufferPut(uint8_t data) {
@@ -96,14 +55,6 @@ uint8_t UART_H_RingBufferPut(uint8_t data) {
 }
 
 
- 
-
-
-
-
-
-
-
 uint8_t UART_H_RingBufferGet(uint8_t *data) {
     if (!data || UART_H_RingBufferIsEmpty()) {
         return 0U;
@@ -115,19 +66,6 @@ uint8_t UART_H_RingBufferGet(uint8_t *data) {
 
     return 1U;
 }
-
-
- 
-
-
-
-
-
-
-
-
-
-
 
 
 uint8_t UART_H_RingBufferPeek(uint16_t len, uint8_t *data) {
@@ -150,14 +88,6 @@ uint8_t UART_H_RingBufferPeek(uint16_t len, uint8_t *data) {
 }
 
 
- 
-
-
-
-
-
-
-
 void UART_H_GPIO_Init(void) {
     GPIO_InitTypeDef GPIO_InitStructure;
 
@@ -176,14 +106,6 @@ void UART_H_GPIO_Init(void) {
 }
 
 
- 
-
-
-
-
-
-
-
 void UART_H_NVIC_Init(void) {
     NVIC_InitTypeDef NVIC_InitStructure;
 
@@ -193,15 +115,6 @@ void UART_H_NVIC_Init(void) {
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 }
-
-
- 
-
-
-
-
-
-
 
 
 void UART_H_Init(void) {
@@ -228,29 +141,12 @@ void UART_H_Init(void) {
 }
 
 
- 
-
-
-
-
-
-
-
-
-
 void UART_H_SendByte(uint8_t data) {
     while (USART_GetFlagStatus(LOG_UART, USART_FLAG_TXE) == RESET) {
     }
 
     USART_SendData(LOG_UART, (uint16_t)data);
 }
-
-
- 
-
-
-
-
 
 
 void UART_H_SendString(const char *str, uint16_t len) {
@@ -272,18 +168,6 @@ void UART_H_SendString(const char *str, uint16_t len) {
 }
 
 
- 
-
-
-
-
-
-
-
-
-
-
-
 uint8_t UART_H_ReceiveByte(uint8_t *data) {
     if (!data) {
         return 0U;
@@ -297,15 +181,6 @@ uint8_t UART_H_ReceiveByte(uint8_t *data) {
 
     return 1U;
 }
-
-
- 
-
-
-
-
-
-
 
 
 void UART_H_IRQHandler(void) {
